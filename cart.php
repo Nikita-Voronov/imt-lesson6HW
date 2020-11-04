@@ -1,13 +1,13 @@
 <?php
 session_start();
 include 'class_cart.php';
-if (!isset($_SESSION['cart'])) {
-    $_SESSION['cart'] = ['sum' => 0, 'items' => []];
-}
-$sum_allCart = $_SESSION['cart']['sum'];//вся сумма корзины
-$productID = $products[$_GET['products']];//id продукта
-$sum_allCart += $_GET['count'] * $productID['price'];//сумма товаров в корзине
-
+//if (!isset($_SESSION['cart'])) {
+//    $_SESSION['cart'] = ['sum' => 0, 'items' => []];
+//}
+//$sum_allCart = $_SESSION['cart']['sum'];//вся сумма корзины
+//$productID = $products[$_GET['products']];//id продукта
+//$sum_allCart += $_GET['quantity'] * $productID['price'];//сумма товаров в корзине
+$a=new Cart();
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -16,8 +16,8 @@ $sum_allCart += $_GET['count'] * $productID['price'];//сумма товаров
     <title>Ваша корзина</title>
 </head>
 <body>
-<div style="color: #adff2f">
-    К оплате <?php echo $sum_allCart; ?><br><br>
+<div style="color: #fc9a02">
+    К оплате <?php echo $a->sum; ?><br><br>
 
     <form action="" method="GET">
 
@@ -32,10 +32,11 @@ $sum_allCart += $_GET['count'] * $productID['price'];//сумма товаров
 
 
         Количество:<br>
-        <input name="count" type="text"><br>
-        <input type="submit" value="Buy NOW">
+        <input name="quantity" type="text"><br>
+        <input type="submit" name="submit" value="Get to cart">
 
     </form>
+
 
 </div>
 
