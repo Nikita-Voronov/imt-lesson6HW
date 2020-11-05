@@ -28,7 +28,6 @@ class Cart
 
     public function add($id, $quantity, $price)
     {
-        $this->cart = $_SESSION['cart'];
         if (empty($this->cart)) {
             $this->cart['items'][] = ['id' => $id, 'quantity' => $quantity, 'price' => $price * $quantity];
         } else {
@@ -43,6 +42,7 @@ class Cart
         $this->sum = $this->cart['sum'];
         $this->count = $this->cart['count'];
         $this->discount = $this->cart['discount'];
+        $this->calc($this->cart);
     }
 
     public function delete($id)
@@ -53,27 +53,27 @@ class Cart
                 unset($this->cart[$key]);
             }
         }
-        $array = $_SESSION['cart'];
-        $array = $this->calc($array);
-
     }
 
-    public function calc($array)
-    {
-        $array['sum'] = 0;
-        $array['count'] = 0;
-        $array['discount'] = 0;
 
-        foreach ($array['items'] as $key => $value) {
-            $array['sum'] += $value['price'];
-            $array['count'] += $value['quantity'];
+    public function calc($cart)
+    {
+        $this->cart['sum'] = 0;
+        $this->cart['count'] = 0;
+        $this->cart['discount'] = 0;
+
+        foreach ($this->cart['items'] as $key => $value) {
+            $this->cart['sum'] += $value['price'];
+            $this->cart['count'] += $value['quantity'];
         }
-        if ($array['count'] < 10 && $array['sum'] > 2000) {
-            $array['discount'] = $array['sum'] * 0.93;
-        } elseif ($array['count'] > 10) {
-            $array['discount'] = $array['sum'] * 0.9;
+        if ($this->cart['count'] < 10 && $this->cart['sum'] > 2000) {
+            $this->cart['discount'] = $this->cart['sum'] * 0.07;
+            $this->cart['sum']=$this->cart['sum']-$this->cart['discount'];
+        } elseif ($this->cart['count'] > 10) {
+            $this->cart['discount'] = $this->cart['sum'] * 0.1;
+            $this->cart['sum']=$this->cart['sum']-$this->cart['discount'];
         }
-        return $array;
+        return $cart;
     }
 
     public function setSum()

@@ -1,14 +1,14 @@
 <?php
 session_start();
 include 'class_cart.php';
-//if (!isset($_SESSION['cart'])) {
-//    $_SESSION['cart'] = ['sum' => 0, 'items' => []];
-//}
-//$sum_allCart = $_SESSION['cart']['sum'];//вся сумма корзины
-//$productID = $products[$_GET['products']];//id продукта
-//$sum_allCart += $_GET['quantity'] * $productID['price'];//сумма товаров в корзине
+
 $a=new Cart();
-?>
+$iditem=$_GET['products'];
+$a->add($_GET['products'],$_GET['quantity'],$products[$iditem]['price']);?>
+<pre>
+<?php var_dump($a) ?></pre>
+
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -17,7 +17,7 @@ $a=new Cart();
 </head>
 <body>
 <div style="color: #fc9a02">
-    К оплате <?php echo $a->sum; ?><br><br>
+    К оплате <?php echo $a->cart['sum']; ?><br><br>
 
     <form action="" method="GET">
 
@@ -33,7 +33,7 @@ $a=new Cart();
 
         Количество:<br>
         <input name="quantity" type="text"><br>
-        <input type="submit" name="submit" value="Get to cart">
+        <input type="submit" name="" value="Get to cart">
 
     </form>
 
