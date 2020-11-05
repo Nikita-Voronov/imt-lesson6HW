@@ -1,13 +1,9 @@
 <?php
 session_start();
 include 'class_cart.php';
-
-$a=new Cart();
-$iditem=$_GET['products'];
-$a->add($_GET['products'],$_GET['quantity'],$products[$iditem]['price']);?>
-<pre>
-<?php var_dump($a) ?></pre>
-
+$a = new Cart();
+$iditem = $_GET['products'];
+$a->add($_GET['products'], $_GET['quantity'], $products[$iditem]['price']); ?>
 
 <!DOCTYPE html>
 <html lang="ru">
@@ -18,6 +14,14 @@ $a->add($_GET['products'],$_GET['quantity'],$products[$iditem]['price']);?>
 <body>
 <div style="color: #fc9a02">
     К оплате <?php echo $a->cart['sum']; ?><br><br>
+    <table>
+        <?php
+        foreach ($a->cart['items'] as $key => $items) {
+            echo '<tr><td>' . 'id товара:' . $iditem . '</td><td>'
+                . 'Наиминование товара:' . $products[$iditem]['name'] . '</td><td>' . 'Количество:' . $_GET['quantity'] . '</td><td><a href=/delete.php?id = ' . $key . '>Удалить</a></td ></tr>';
+        }//var_dump($_SESSION['cart']['items']);
+        ?>
+    </table>
 
     <form action="" method="GET">
 

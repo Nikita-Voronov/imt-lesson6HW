@@ -38,16 +38,11 @@ class Cart
                 }
             }
         }
-        $this->items = $this->cart['items'];
-        $this->sum = $this->cart['sum'];
-        $this->count = $this->cart['count'];
-        $this->discount = $this->cart['discount'];
         $this->calc($this->cart);
     }
 
     public function delete($id)
     {
-        $this->cart = $_SESSION['cart'];
         foreach ($this->cart as $key => $value) {
             if ($value['id'] == $id) {
                 unset($this->cart[$key]);
@@ -68,10 +63,10 @@ class Cart
         }
         if ($this->cart['count'] < 10 && $this->cart['sum'] > 2000) {
             $this->cart['discount'] = $this->cart['sum'] * 0.07;
-            $this->cart['sum']=$this->cart['sum']-$this->cart['discount'];
+            $this->cart['sum'] = $this->cart['sum'] - $this->cart['discount'];
         } elseif ($this->cart['count'] > 10) {
             $this->cart['discount'] = $this->cart['sum'] * 0.1;
-            $this->cart['sum']=$this->cart['sum']-$this->cart['discount'];
+            $this->cart['sum'] = $this->cart['sum'] - $this->cart['discount'];
         }
         return $cart;
     }
